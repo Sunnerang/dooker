@@ -2,10 +2,6 @@ trigger:
   branches:
     include:
       - main
-trigger:
-  branches:
-    include:
-      - main
 
 jobs:
 - job: BuildAndDeploy
@@ -14,21 +10,23 @@ jobs:
 
   steps:
     - task: Docker@2
-      displayName: 'Build and push dockerApi image'
+      displayName: Build and push an image to container registry
       inputs:
-        command: 'buildAndPush'
-        Dockerfile: '$(Build.SourcesDirectory)/dockerApi/Dockerfile'
-        imageName: 'arnoldregistry.azurecr.io/dockerApi:$(Build.BuildId)'
-        containerRegistry: 'arnoldregistry'
+        command: buildAndPush
+        repository: 'dockerApi'
+        dockerfile: '$(Build.SourcesDirectory)/dockerApi/Dockerfile'
+        containerRegistry: 'arnoldregistry.azurecr.io'
+        tags: 'main'
 
     - task: Docker@2
-      displayName: 'Build and push dockerApp image'
+      displayName: Build and push an image to container registry
       inputs:
-        command: 'buildAndPush'
-        Dockerfile: '$(Build.SourcesDirectory)/dockerApp/Dockerfile'
-        imageName: 'arnoldregistry.azurecr.io/dockerApp:$(Build.BuildId)'
-        containerRegistry: 'arnoldregistry'
+        command: buildAndPush
+        repository: 'dockerApp'
+        dockerfile: '$(Build.SourcesDirectory)/dockerApp/Dockerfile'
+        containerRegistry: 'arnoldregistry.azurecr.io'
+        tags: 'main'
 
     - script: |
-        az container create --resource-group arnoldcontainer --name multiContainerGroup --image arnoldregistry.azurecr.io/dockerApi:$(Build.BuildId) arnoldregistry.azurecr.io/dockerApp:$(Build.BuildId) --registry-login-server arnoldregistry.azurecr.io --registry-username "$(arnoldregistry)" --registry-password "$(1xV6E1K/66R/ET3HojnHDt1moDdZX020w9C8z4wceh+ACRBiPMtK)"
+        az container create --resource-group arnoldcontainer --name multiContainerGroup --image arnoldregistry.azurecr.io/dockerApi:main arnoldregistry.azurecr.io/dockerApp:main --registry-login-server arnoldregistry.azurecr.io --registry-username "$(arnoldregistry)" --registry-password "$(1xV6E1K/66R/ET3HojnHDt1moDdZX020w9C8z4wceh+ACRBiPMtK)"
       displayName: 'Deploy multi-container group'
