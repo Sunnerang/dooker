@@ -1,31 +1,28 @@
-# Starter pipeline
-- task: Docker@2
-  inputs:
-    containerRegistry: 'arnoldregistry'
-    repository: 'dookerApi'
-    command: 'buildAndPush'
-    Dockerfile: '**/dockerApi/Dockerfile'
-- task: Docker@2
-  inputs:
-    containerRegistry: 'arnoldregistry'
-    repository: 'dookerApp'
-    command: 'buildAndPush'
-    Dockerfile: '**/dockerApp/Dockerfile'
-# Start with a minimal pipeline that you can customize to build and deploy your code.
-# Add steps that build, run tests, deploy, and more:
-# https://aka.ms/yaml
-
 trigger:
-- main
-
+  branches:
+    include:
+      - main
+jobs:
+- job: BuildAndDeploy
 pool:
-  vmImage: ubuntu-latest
-
+  vmImage: 'ubuntu-latest'
 steps:
-- script: echo Hello, world!
-  displayName: 'Run a one-line script'
+  - task: Docker@2
+    displayName: 'Build and push dockerApi image'
+    inputs:
+      command: 'buildAndPush'
+      Dockerfile: '$(Build.SourcesDirectory)/dockerApi/Dockerfile'
+      imageName: 'myacr.azurecr.io/app1:$(Build.BuildId)'
+      containerRegistry: 'myacr'
 
-- script: |
-    echo Add other tasks to build, test, and deploy your project.
-    echo See https://aka.ms/yaml
-  displayName: 'Run a multi-line script'
+  - task: Docker@2
+    displayName: 'Build and push dockerApp image'
+    inputs:
+      command: 'buildAndPush'
+      Dockerfile: '$(Build.SourcesDirectory)/dockerApp/Dockerfile'
+      imageName: 'myacr.azurecr.io/app2:$(Build.BuildId)'
+      containerRegistry: 'myacr'
+
+  - script: |
+      az container create --resource-group myResourceGroup --name multiContainerGroup --image myacr.azurecr.io/app1:$(Build.BuildId) myacr.azurecr.io/app2:$(Build.BuildId) --registry-login-server myacr.azurecr.io --registry-username $(ACR_USERNAME) --registry-password $(ACR_PASSWORD)
+    displayName: 'Deploy multi-container group'
