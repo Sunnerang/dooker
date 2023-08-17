@@ -1,0 +1,15 @@
+This api and webapp are built to learn and test development and networking of and between containers locally and in environments such as Azure. 
+The only current functionality is a single GET-request from dockerApp to dockerApi, fetching and displaying the string "Hello World!". 
+The README describes how to run the two applications composed together or as containers  on their own.
+Running them as composed containers gives us a very smooth way of setting both their networking and environments during local development.
+
+A few technical choices have been made during their development. 
+I chose to work wholly within .Net because of available documentation, guides and personal habits. 
+dockerApi uses the net7.0 sdk and aspnet7.0 as runtime.
+dockerApp uses the net6.0 sdk and aspnet6.0 as runtime.
+
+Each applications is hosted in it's own Azure Container App, with it's own scale rules and so on. 
+I have set the dockerApi to a higher availability than dockerApp. 
+Price
+Scalability
+
