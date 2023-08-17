@@ -4,25 +4,25 @@ trigger:
       - main
 jobs:
 - job: BuildAndDeploy
-pool:
-  vmImage: 'ubuntu-latest'
-steps:
-  - task: Docker@2
-    displayName: 'Build and push dockerApi image'
-    inputs:
-      command: 'buildAndPush'
-      Dockerfile: '$(Build.SourcesDirectory)/dockerApi/Dockerfile'
-      imageName: 'myacr.azurecr.io/dockerApi:$(Build.BuildId)'
-      containerRegistry: 'myacr'
+  pool:
+    vmImage: 'ubuntu-latest'
+  steps:
+    - task: Docker@2
+      displayName: 'Build and push dockerApi image'
+      inputs:
+        command: 'buildAndPush'
+        Dockerfile: '$(Build.SourcesDirectory)/dockerApi/Dockerfile'
+        imageName: 'arnoldregistry.azurecr.io/dockerApi:$(Build.BuildId)'
+        containerRegistry: 'arnoldregistry'
 
-  - task: Docker@2
-    displayName: 'Build and push dockerApp image'
-    inputs:
-      command: 'buildAndPush'
-      Dockerfile: '$(Build.SourcesDirectory)/dockerApp/Dockerfile'
-      imageName: 'myacr.azurecr.io/dockerApp:$(Build.BuildId)'
-      containerRegistry: 'myacr'
+    - task: Docker@2
+      displayName: 'Build and push dockerApp image'
+      inputs:
+        command: 'buildAndPush'
+        Dockerfile: '$(Build.SourcesDirectory)/dockerApp/Dockerfile'
+        imageName: 'arnoldregistry.azurecr.io/dockerApp:$(Build.BuildId)'
+        containerRegistry: 'arnoldregistry'
 
-  - script: |
-      az container create --resource-group arnoldcontainer --name multiContainerGroup --image myacr.azurecr.io/dockerApi:$(Build.BuildId) myacr.azurecr.io/dockerApp:$(Build.BuildId) --registry-login-server myacr.azurecr.io --registry-username $(ACR_USERNAME) --registry-password $(ACR_PASSWORD)
-    displayName: 'Deploy multi-container group'
+    - script: |
+        az container create --resource-group arnoldcontainer --name multiContainerGroup --image arnoldregistry.azurecr.io/dockerApi:$(Build.BuildId) arnoldregistry.azurecr.io/dockerApp:$(Build.BuildId) --registry-login-server myacr.azurecr.io --registry-username $(arnoldregistry) --registry-password $(1xV6E1K/66R/ET3HojnHDt1moDdZX020w9C8z4wceh+ACRBiPMtK)
+      displayName: 'Deploy multi-container group'
