@@ -2,10 +2,16 @@ trigger:
   branches:
     include:
       - main
+trigger:
+  branches:
+    include:
+      - main
+
 jobs:
 - job: BuildAndDeploy
   pool:
     vmImage: 'ubuntu-latest'
+
   steps:
     - task: Docker@2
       displayName: 'Build and push dockerApi image'
@@ -24,5 +30,5 @@ jobs:
         containerRegistry: 'arnoldregistry'
 
     - script: |
-        az container create --resource-group arnoldcontainer --name multiContainerGroup --image arnoldregistry.azurecr.io/dockerApi:$(Build.BuildId) arnoldregistry.azurecr.io/dockerApp:$(Build.BuildId) --registry-login-server myacr.azurecr.io --registry-username $(arnoldregistry) --registry-password $(1xV6E1K/66R/ET3HojnHDt1moDdZX020w9C8z4wceh+ACRBiPMtK)
+        az container create --resource-group arnoldcontainer --name multiContainerGroup --image arnoldregistry.azurecr.io/dockerApi:$(Build.BuildId) arnoldregistry.azurecr.io/dockerApp:$(Build.BuildId) --registry-login-server arnoldregistry.azurecr.io --registry-username "$(arnoldregistry)" --registry-password "$(1xV6E1K/66R/ET3HojnHDt1moDdZX020w9C8z4wceh+ACRBiPMtK)"
       displayName: 'Deploy multi-container group'
