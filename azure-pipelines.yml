@@ -12,7 +12,7 @@ steps:
     inputs:
       command: 'buildAndPush'
       Dockerfile: '$(Build.SourcesDirectory)/dockerApi/Dockerfile'
-      imageName: 'myacr.azurecr.io/app1:$(Build.BuildId)'
+      imageName: 'myacr.azurecr.io/dockerApi:$(Build.BuildId)'
       containerRegistry: 'myacr'
 
   - task: Docker@2
@@ -20,9 +20,9 @@ steps:
     inputs:
       command: 'buildAndPush'
       Dockerfile: '$(Build.SourcesDirectory)/dockerApp/Dockerfile'
-      imageName: 'myacr.azurecr.io/app2:$(Build.BuildId)'
+      imageName: 'myacr.azurecr.io/dockerApp:$(Build.BuildId)'
       containerRegistry: 'myacr'
 
   - script: |
-      az container create --resource-group myResourceGroup --name multiContainerGroup --image myacr.azurecr.io/app1:$(Build.BuildId) myacr.azurecr.io/app2:$(Build.BuildId) --registry-login-server myacr.azurecr.io --registry-username $(ACR_USERNAME) --registry-password $(ACR_PASSWORD)
+      az container create --resource-group arnoldcontainer --name multiContainerGroup --image myacr.azurecr.io/dockerApi:$(Build.BuildId) myacr.azurecr.io/dockerApp:$(Build.BuildId) --registry-login-server myacr.azurecr.io --registry-username $(ACR_USERNAME) --registry-password $(ACR_PASSWORD)
     displayName: 'Deploy multi-container group'
