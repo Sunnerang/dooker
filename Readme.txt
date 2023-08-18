@@ -2,6 +2,8 @@ Before creating images and running containers referenced here, you need an insta
 We recommend installing Docker Desktop when using Windows or MacOS, and Docker Engine when using Linux 
 See https://docs.docker.com/engine/install/ for available downloads and further help on how to use Docker
 
+--------------------------------------------------------------------------------------------------------------------------------
+
 Running dockerApi with Docker:
     
     Begin by navigating to the directory containing the Dockerfile, in this case "dockerApi"
@@ -16,7 +18,7 @@ Running dockerApi with Docker:
         docker run -d -p 8080:80 <yourImageName>
 
     When you instantiate an image into either a detached or non-detached container, 
-    that instance is automatically given an ID and a NAME by docker. 
+    that instance is automatically given an ID and a NAME by docker 
     To view the containers on your machine and their respective IDs and NAMEs, use the command 
         docker ps 
 
@@ -46,7 +48,7 @@ Running dockerApp with Docker:
         docker run -d -p 5000:80 <yourImageName>
 
     When you instantiate an image into either a detached or non-detached container, 
-    that instance is automatically given an ID and a NAME by docker. 
+    that instance is automatically given an ID and a NAME by docker 
     To view the containers on your machine and their respective IDs and NAMEs, use the command 
         docker ps 
 
