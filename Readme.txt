@@ -1,4 +1,4 @@
-Before creating images and running containers referenced here, you need an installation of Docker
+Before creating container images and running containers referenced here, you need an installation of Docker
 We recommend installing Docker Desktop when using Windows or MacOS, and Docker Engine when using Linux 
 See https://docs.docker.com/engine/install/ for available downloads and further help on how to use Docker
 

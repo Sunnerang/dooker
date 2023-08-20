@@ -15,7 +15,7 @@ A maximum of ten active replicas limits the maximum costs of the resources
 
 The resource group of both container apps is currently within a budget of 100 sek a month
 Projected costs that exceed the budget trigger a warning by email
-Costs may very well be balanced further against response times during different load scenarios using load testing tools
+Costs may very well be balanced further against overall availability and response times during different load scenarios using load testing tools
 
 
 
