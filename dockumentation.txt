@@ -1,15 +1,21 @@
-This api and webapp are built to learn and test development and networking of and between containers locally and in environments such as Azure. 
-The only current functionality is a single GET-request from dockerApp to dockerApi, fetching and displaying the string "Hello World!". 
-The Readme describes how to run the two applications composed together or as containers on their own.
-Running them as composed containers gives us a very smooth way of setting both their networking and environments during local development.
+These apps are built for learning and testing development of, and networking between, containers locally and within Azure Container Apps
+The only current functionality is a single GET-request from dockerApp to dockerApi, fetching and displaying the string "dockerApi says hello!" 
+The Readme describes how to run the two applications composed together or as containers on their own
 
-A few technical choices have been made during their development. 
-I chose to work wholly within .Net because of available documentation, guides and personal habits. 
-dockerApi uses net7.0 as framework and aspnet7.0 as runtime.
-dockerApp uses net6.0 as framework and aspnet6.0 as runtime.
+A few technical choices have been made during development  
+Both apps are made wholly within .Net because of available documentation, neat templates and personal comfort 
+dockerApi uses net7.0 as framework and aspnet7.0 as runtime
+dockerApp uses net6.0 as framework and aspnet6.0 as runtime
 
-Each applications is hosted in it's own Azure Container App, with it's own scale rules and so on. 
-I have set the dockerApi to a higher availability than dockerApp. 
-Price
-Scalability
+Both applications are deployed as Docker containers hosted in separate Azure Container Apps, with their own rules for scaling and networking   
+Both Azure Container Apps scale elastically in or out depending on the quantity of incoming requests
+Both Azure Container Apps use scale rules with a minimum of one and maximum of ten replicas (running instances of the current container revision)
+A minimum of one active replica reduces response time when the time between requests is long
+A maximum of ten active replicas limits the maximum costs of the resources
+
+The resource group of both container apps is currently within a budget of 100 sek a month
+Projected costs that exceed the budget trigger a warning by email
+Costs may very well be balanced further against response times during different load scenarios using load testing tools
+
+
 
