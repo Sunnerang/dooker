@@ -68,7 +68,7 @@ Running dockerApi and dockerApp composed together using Docker Compose:
 
     Docker Compose makes it very easy to test the networking between our two applications
     
-    The docker-compose.yml defines a network for them to communicate with each other, 
+    The docker-compose.yml defines a network for them to communicate with each other 
     while also mapping the container ports of each to host ports, allowing us to communicate with both apps through localhost:<port>
     
     This docker-compose.yml also sets the environments of both containers to Development, 
